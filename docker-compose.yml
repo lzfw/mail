@@ -51,8 +51,8 @@ networks:
     name: global-mail-network
   proxy-network:
     name: global-proxy-network
-    # Do not create that network if it does not exist
-    external: true
+    # not marked as external although it is to avoid a dependency cycle when
+    # installing the projects
 
 volumes:
   maildata:
