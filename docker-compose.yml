@@ -37,6 +37,7 @@ services:
 
   cert-companion:
     image: nginx
+    restart: always
     environment:
       - VIRTUAL_HOST=${LETSENCRYPT_HOST}
       - LETSENCRYPT_HOST
