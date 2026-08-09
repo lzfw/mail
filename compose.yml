@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   mail:
     image: tvial/docker-mailserver:latest
@@ -26,9 +25,9 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
-    restart: always
+    restart: no
     networks:
-      mail:
+      global-mail-network:
         aliases:
           # Allow connecting to this service via
           # mailgate mail.leo9000.de via local network
@@ -45,13 +44,13 @@ services:
     volumes:
       - "./www:/usr/share/nginx/html:ro"
     networks:
-      proxy-network:
+      global-proxy-network:
 
 networks:
-  mail:
-    name: global-mail-network
-  proxy-network:
-    name: global-proxy-network
+  global-mail-network:
+    name: global-mail-network  # Forces exact name without 'mail_' prefix
+  global-proxy-network:
+    external: true
     # not marked as external although it is to avoid a dependency cycle when
     # installing the projects
 
@@ -60,8 +59,8 @@ volumes:
   mailstate:
   maillogs:
   certs:
-    external:
-      name: frontend-proxy_certs
+    external: true
+    name: frontend-proxy_certs
 
 # vim: tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
 
