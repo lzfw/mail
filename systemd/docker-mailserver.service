@@ -1,0 +1,15 @@
+[Unit]
+Description=Docker Mailserver (Force Recreate on Boot)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/mail
+ExecStart=/usr/bin/docker compose up -d --force-recreate
+ExecStop=/usr/bin/docker compose down
+
+[Install]
+WantedBy=multi-user.target
+

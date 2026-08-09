@@ -1,0 +1,13 @@
+[Unit]
+Description=Update IPTables Rules for Mail Container
+After=docker-mailserver.service
+Requires=docker-mailserver.service docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/mail/firewall.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
